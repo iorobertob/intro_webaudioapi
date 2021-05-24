@@ -4,11 +4,11 @@ console.clear();
 
 // for cross browser
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioCtx;
+let   audioCtx;
 
 // load some sound
 const audioElement = document.querySelector('audio');
-let track;
+let   track;
 
 const playButton = document.querySelector('.tape-controls-play');
 
@@ -24,10 +24,12 @@ playButton.addEventListener('click', function() {
 	}
 
 	if (this.dataset.playing === 'false') {
+		// if track is not playing, play it
 		audioElement.play();
 		this.dataset.playing = 'true';
-	// if track is playing pause it
-	} else if (this.dataset.playing === 'true') {
+	} 
+	else if (this.dataset.playing === 'true') {
+		// if track is playing pause it
 		audioElement.pause();
 		this.dataset.playing = 'false';
 	}
@@ -46,21 +48,23 @@ audioElement.addEventListener('ended', () => {
 function init() {
 
 	audioCtx = new AudioContext();
-	track = audioCtx.createMediaElementSource(audioElement);
+	track    = audioCtx.createMediaElementSource(audioElement);
 
 	// volume
-	const gainNode = audioCtx.createGain();
+	const gainNode 			= audioCtx.createGain();
 
 	const volumeControl = document.querySelector('[data-action="volume"]');
+	
 	volumeControl.addEventListener('input', function() {
 		gainNode.gain.value = this.value;
 	}, false);
 
 	// panning
 	const pannerOptions = { pan: 0 };
-	const panner = new StereoPannerNode(audioCtx, pannerOptions);
+	const panner 				= new StereoPannerNode(audioCtx, pannerOptions);
 
 	const pannerControl = document.querySelector('[data-action="panner"]');
+	
 	pannerControl.addEventListener('input', function() {
 		panner.pan.value = this.value;
 	}, false);
